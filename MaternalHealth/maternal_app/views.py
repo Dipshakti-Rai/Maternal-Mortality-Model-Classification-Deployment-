@@ -1,6 +1,8 @@
 from django.shortcuts import render,redirect
 from .forms import PredictionForm
 from .models import HealthPrediction,PostNews
+import pickle
+model=pickle.load(open('./mlModel/regmodel.pkl','rb'))
 
 # Create your views here.
 
@@ -9,13 +11,33 @@ def index(request):
     form=PredictionForm()
     post=PostNews.objects.all()
     if request.method=='POST':
-        form=PredictionForm(request.POST)
-        form.save()
+        #form=PredictionForm(request.POST)
+        patient_id = request.POST["patient_id"]
+        address = request.POST["address"]
+        date_of_birth = request.POST["date_of_birth"]
+        contact_num = request.POST["contact_num"]
+        age_group = request.POST["age_group"]
+        systolic_bp = request.POST["systolic_bp"]
+        diastolic_bp = request.POST["diastolic_bp"]
+        blood_sugar = request.POST["blood_sugar"]
+        body_temp = request.POST["body_temp"]
+        heart_rate = request.POST["heart_rate"]
+        #maternal_data=HealthPrediction()
+        maternal_data=HealthPrediction(patient_id=patient_id,contact_num=contact_num,date_of_birth=date_of_birth,address=address,age_group=age_group,systolic_bp=systolic_bp,diastolic_bp=diastolic_bp,blood_sugar=blood_sugar,body_temp=body_temp,heart_rate=heart_rate)
+        maternal_data.save()
+        y_predict=model.predict([[systolic_bp,diastolic_bp,blood_sugar,body_temp,heart_rate,age_group]])
+        if y_predict[0]==0:
+            y_predict='Low Risk'
+        elif y_predict[0]==1:
+            y_predict='Medium'
+        else:
+            y_predict='High'
         form=PredictionForm()
         context={
         'title':'Home',
         'posts':post,     #News post 
-        'form':form
+        'form':form,
+        'predict':y_predict
     }
         return render(request,template,context)
     else:
@@ -66,6 +88,20 @@ def news_portal(request,id):
     }
     return render(request,template,context)
     
+
+def predi(request):
+    age_group=request.GET['age_group']
+    systolic_bp=request.GET['systolic_bp']
+    diastolic_bp=request.GET['diastolic_bp']
+    blood_sugar=request.GET['blood_sugar']
+    body_temp=request.GET['body_temp']
+    heart_rate=request.GET['heart_rate']
+    age_group=request.GET['age_group']
+
+    y_pred=model.predict([[systolic_bp,diastolic_bp,blood_sugar,body_temp,heart_rate,age_group]])
+
+    print(y_pred)
+
 
     
    

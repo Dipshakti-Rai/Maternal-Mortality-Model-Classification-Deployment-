@@ -12,6 +12,7 @@ class HealthPrediction(models.Model):
     diastolic_bp = models.IntegerField()
     blood_sugar = models.IntegerField()
     body_temp = models.IntegerField()
+    heart_rate = models.IntegerField(default=False)
 
     class Meta:
         db_table = "MaternalHealth"

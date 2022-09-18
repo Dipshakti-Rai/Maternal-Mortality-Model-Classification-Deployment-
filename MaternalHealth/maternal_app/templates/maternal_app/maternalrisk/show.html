@@ -17,6 +17,7 @@
         <th scope="col">Diastolic BP</th>
         <th scope="col">Blood Sugar</th>
         <th scope="col">Body Temperature</th>
+        <th scope="col">Heart Rate</th>
         <th scope="col">Predicted Results</th>
       </tr>
     </thead>
@@ -33,6 +34,7 @@
             <td>{{i.diastolic_bp}}</td>
             <td>{{i.blood_sugar}}</td>
             <td>{{i.body_temp}}</td>
+            <td>{{i.heart_rate}}</td>
             <td></td>
             <td>
                 <td><a href="{% url 'edit' i.id %}" method="post"><i class="fa fa-pencil"></i></a></td>

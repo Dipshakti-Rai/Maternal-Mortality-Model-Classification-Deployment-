@@ -70,6 +70,9 @@
             <input type="submit" value="check" class="'btn btn-primary">
 
            </form>
+           {% if predict %}
+           <h1>Flower you're trying to classify is {{predict}}</h1>
+       {% endif %}
           
         </div>
     </div>
