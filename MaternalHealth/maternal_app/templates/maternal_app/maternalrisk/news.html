@@ -1,0 +1,10 @@
+{% extends "maternal_app/layouts/base.html" %}
+{% block title %} {{title}} {% endblock %}
+
+{% block content %}
+{% for i in posts %}
+        <h5>{{i.create_at|date:'M-d-Y'}}</h5>
+        <strong>{{i.title}}</strong>
+        <p>{{i.body}}</p>
+        {% endfor %}
+{% endblock %}

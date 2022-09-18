@@ -1,0 +1,49 @@
+{% extends "maternal_app/layouts/base.html" %}
+{% block title %} {{title}} {% endblock %}
+
+{% block custom_css %} {% endblock %}
+
+{% block content %}
+<table class="table">
+    <thead>
+      <tr>
+        <th>#SNO.</th>
+        <th scope="col">Patient ID</th>
+        <th scope="col">Date of Birth</th>
+        <th scope="col">Address</th>
+        <th scope="col">Contact Number</th>
+        <th scope="col">Age Group</th>
+        <th scope="col">Systolic BP</th>
+        <th scope="col">Diastolic BP</th>
+        <th scope="col">Blood Sugar</th>
+        <th scope="col">Body Temperature</th>
+        <th scope="col">Predicted Results</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for i in reports %}
+        <tr>
+            <td>{{forloop.counter}}</td>
+            <td>{{i.patient_id}}</td>
+            <td>{{i.date_of_birth}}</td>
+            <td>{{i.address}}</td>
+            <td>{{i.contact_num}}</td>
+            <td>{{i.age_group}}</td>
+            <td>{{i.systolic_bp}}</td>
+            <td>{{i.diastolic_bp}}</td>
+            <td>{{i.blood_sugar}}</td>
+            <td>{{i.body_temp}}</td>
+            <td></td>
+            <td>
+                <td><a href="{% url 'edit' i.id %}" method="post"><i class="fa fa-pencil"></i></a></td>
+                <td><a href="{% url 'delete' i.id %}" method="post"><i class="fa fa-trash"></i></a></td>
+
+
+            </td>
+            
+        </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+
+{% endblock %}
