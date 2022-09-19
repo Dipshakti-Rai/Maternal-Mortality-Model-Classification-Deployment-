@@ -37,7 +37,6 @@ def index(request):
             y_predict='Medium Risk'
         else:
             y_predict='High Risk'
-        print(y_predict)
         form=PredictionForm()
         context={
         'title':'Home',
@@ -93,19 +92,6 @@ def news_portal(request,id):
     }
     return render(request,template,context)
     
-
-'''def predi(request):
-    age_group=request.GET['age_group']
-    systolic_bp=request.GET['systolic_bp']
-    diastolic_bp=request.GET['diastolic_bp']
-    blood_sugar=request.GET['blood_sugar']
-    body_temp=request.GET['body_temp']
-    heart_rate=request.GET['heart_rate']
-    age_group=request.GET['age_group']
-
-    y_pred=model.predict([[systolic_bp,diastolic_bp,blood_sugar,body_temp,heart_rate,age_group]])
-
-    print(y_pred)'''
 
 
     
