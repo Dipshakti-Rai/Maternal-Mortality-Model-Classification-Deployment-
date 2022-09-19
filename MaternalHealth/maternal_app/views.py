@@ -2,7 +2,12 @@ from django.shortcuts import render,redirect
 from .forms import PredictionForm
 from .models import HealthPrediction,PostNews
 import pickle
-model=pickle.load(open('./mlModel/regmodel.pkl','rb'))
+import numpy as np
+import pandas as pd
+import xgboost
+
+model=pickle.load(open('./mlModel/classification_model','rb'))
+#model=pickle.load(open('classification_model','rb'))
 
 # Create your views here.
 
@@ -11,7 +16,6 @@ def index(request):
     form=PredictionForm()
     post=PostNews.objects.all()
     if request.method=='POST':
-        #form=PredictionForm(request.POST)
         patient_id = request.POST["patient_id"]
         address = request.POST["address"]
         date_of_birth = request.POST["date_of_birth"]
@@ -22,20 +26,22 @@ def index(request):
         blood_sugar = request.POST["blood_sugar"]
         body_temp = request.POST["body_temp"]
         heart_rate = request.POST["heart_rate"]
-        #maternal_data=HealthPrediction()
         maternal_data=HealthPrediction(patient_id=patient_id,contact_num=contact_num,date_of_birth=date_of_birth,address=address,age_group=age_group,systolic_bp=systolic_bp,diastolic_bp=diastolic_bp,blood_sugar=blood_sugar,body_temp=body_temp,heart_rate=heart_rate)
         maternal_data.save()
-        y_predict=model.predict([[systolic_bp,diastolic_bp,blood_sugar,body_temp,heart_rate,age_group]])
+        test_data1=[systolic_bp,diastolic_bp,blood_sugar,body_temp,heart_rate,age_group]
+        test_data=np.array([test_data1],dtype=float)
+        y_predict=model.predict(test_data)
         if y_predict[0]==0:
             y_predict='Low Risk'
         elif y_predict[0]==1:
-            y_predict='Medium'
+            y_predict='Medium Risk'
         else:
-            y_predict='High'
+            y_predict='High Risk'
+        print(y_predict)
         form=PredictionForm()
         context={
         'title':'Home',
-        'posts':post,     #News post 
+        'posts':post,     
         'form':form,
         'predict':y_predict
     }
@@ -43,7 +49,7 @@ def index(request):
     else:
         context={
             'title':'Home',
-             'posts':post,     #News post 
+             'posts':post,   
             'form':form
         }
         return render(request,template,context)
@@ -83,13 +89,12 @@ def news_portal(request,id):
     post=PostNews.objects.filter(id=id)
     context={
         'title':'News ',
-        #'posts':'post',     #News post 
         'posts':post
     }
     return render(request,template,context)
     
 
-def predi(request):
+'''def predi(request):
     age_group=request.GET['age_group']
     systolic_bp=request.GET['systolic_bp']
     diastolic_bp=request.GET['diastolic_bp']
@@ -100,7 +105,7 @@ def predi(request):
 
     y_pred=model.predict([[systolic_bp,diastolic_bp,blood_sugar,body_temp,heart_rate,age_group]])
 
-    print(y_pred)
+    print(y_pred)'''
 
 
     

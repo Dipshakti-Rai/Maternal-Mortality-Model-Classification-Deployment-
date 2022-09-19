@@ -1,4 +1,5 @@
 from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator 
 
 # Create your models here.
 
@@ -7,12 +8,12 @@ class HealthPrediction(models.Model):
     address = models.CharField(max_length=50, null=False)
     date_of_birth=models.DateField(auto_now=False)
     contact_num = models.IntegerField()
-    age_group = models.IntegerField()
-    systolic_bp = models.IntegerField()
-    diastolic_bp = models.IntegerField()
-    blood_sugar = models.IntegerField()
-    body_temp = models.IntegerField()
-    heart_rate = models.IntegerField(default=False)
+    age_group = models.PositiveIntegerField(validators=[MinValueValidator(0), MaxValueValidator(11)])
+    systolic_bp = models.PositiveIntegerField(default=False)
+    diastolic_bp = models.PositiveIntegerField(default=False)
+    blood_sugar = models.FloatField(default=False)
+    body_temp = models.FloatField(default=False)
+    heart_rate = models.PositiveIntegerField(default=False)
 
     class Meta:
         db_table = "MaternalHealth"

@@ -18,7 +18,7 @@
         <th scope="col">Blood Sugar</th>
         <th scope="col">Body Temperature</th>
         <th scope="col">Heart Rate</th>
-        <th scope="col">Predicted Results</th>
+        <th scope="col">Action</th>
       </tr>
     </thead>
     <tbody>
@@ -35,13 +35,10 @@
             <td>{{i.blood_sugar}}</td>
             <td>{{i.body_temp}}</td>
             <td>{{i.heart_rate}}</td>
-            <td></td>
-            <td>
-                <td><a href="{% url 'edit' i.id %}" method="post"><i class="fa fa-pencil"></i></a></td>
-                <td><a href="{% url 'delete' i.id %}" method="post"><i class="fa fa-trash"></i></a></td>
-
-
-            </td>
+            
+            <td><a href="{% url 'edit' i.id %}" method="post"><i class="fa fa-pencil"></i></a></td>
+            <td><a href="{% url 'delete' i.id %}" method="post"><i class="fa fa-trash"></i></a></td>
+            
             
         </tr>
       {% endfor %}

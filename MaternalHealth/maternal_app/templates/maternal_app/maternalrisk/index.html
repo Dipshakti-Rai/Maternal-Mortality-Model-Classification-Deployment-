@@ -47,10 +47,23 @@
 </div>
 <div class="container-fluid mt-3" >
     <div class="row">
-        <div class="col-md-9" id="sidebar">Summary
+        <div class="col-md-9" id="sidebar"><h3>Maternal Mortality Model Specification and News</h3>
             <div class="row">
                 <div class="col-md-3">
-                    Lorem ipsum dolor sit amet consectetur adipisicing elit. Fugit quibusdam quaerat voluptate dolore vel ad nulla necessitatibus totam harum quisquam?
+                  <dl>
+                    <dt>Age Group</dt>
+                    <dd>- Age group of patient.Range (10-15):0,(15-20):1,(20-25):2,(25-30):3,(30-35):4,(35-40):5,(40-45):5,(45-50):6,(50-55):7,(55-60):8,(60-65):9,(65-70):10,(70-):11. i.e for age of <mark>27</mark> pick <mark>3</mark> as in input feature.</dd>
+                    <dt>Systolic Blood Pressure</dt>
+                    <dd>- Measured blood pressure of patient. i.e blood pressure value <mark>120/80 mmHg</mark> use <mark>120</mark> as an input feature.</dd>
+                    <dt>Diastolic Blood Pressure</dt>
+                    <dd>- Measured blood pressure of patient. i.e blood pressure value <mark>120/80 mmHg</mark> use <mark>80</mark> as an diastolic blood pressure input.</dd>
+                    <dt>Blood Sugar</dt>
+                    <dd>- Blood sugar level of patient. When it was measured <mark>140 mg/dL (7.8 mmol/L)</mark> use <mark>7.8</mark> as an input.</dd>
+                    <dt>Body Temperature</dt>
+                    <dd>- Like body temperature of <mark>98.6°F (37°C)</mark> use <mark>98.6</mark> as body temeprature input.</dd>
+                    <dt>Heart Rate</dt>
+                    <dd>- Measured heart rate of patient when patent have heart rate of <mark>60 </mark>beats per minute use<mark> 60</mark> as an input feature.</dd>
+                  </dl>
                 </div>
                 <div class="col-md-9">
                     {% for i in posts %}
@@ -67,12 +80,14 @@
             {% csrf_token %}
 
             {{ form.as_p }}
-            <input type="submit" value="check" class="'btn btn-primary">
+            <input type="submit" value="Check" class="'btn btn-primary">
+            <a class="btn btn-link" href="{% url 'show'%}" role="button">Old Patient Data </a>
 
            </form>
+
            {% if predict %}
-           <h1>Flower you're trying to classify is {{predict}}</h1>
-       {% endif %}
+           <h6>Maternal mortality is predicted as <strong>{{predict}}</strong></h6>
+            {% endif %}
           
         </div>
     </div>
